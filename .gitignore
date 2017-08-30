@@ -1,3 +1,4 @@
-**/nbproject/
-**/*.xml
-**/*.mf
+*/nbproject/
+*/*.xml
+*/*.mf
+*.class
