@@ -3,26 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package AVLtree.src;
 
 /**
  *
- * @author Yuri
+ * @author yuri
  */
 public class No {
-    
-    private No pai;
-    private No filhoEsq;
-    private No filhoDir;
-    
-    private int chave;
-    private int fatorBalanceamento;
 
-    public No() {
-        
-    }
-    
+    private No filhoEsquerdo;
+    private No filhoDireito;
+    private No pai;
+    private int chave;
+    private int balanceamento;
+
     public No(int chave) {
         this.chave = chave;
+    }
+
+    public No() {
+    }
+
+    public No getFilhoEsquerdo() {
+        return filhoEsquerdo;
+    }
+
+    public void setFilhoEsquerdo(No filhoEsquerdo) {
+        this.filhoEsquerdo = filhoEsquerdo;
+    }
+
+    public No getFilhoDireito() {
+        return filhoDireito;
+    }
+
+    public void setFilhoDireito(No filhoDireito) {
+        this.filhoDireito = filhoDireito;
     }
 
     public No getPai() {
@@ -33,22 +48,6 @@ public class No {
         this.pai = pai;
     }
 
-    public No getFilhoEsq() {
-        return filhoEsq;
-    }
-
-    public void setFilhoEsq(No filhoEsq) {
-        this.filhoEsq = filhoEsq;
-    }
-
-    public No getFilhoDir() {
-        return filhoDir;
-    }
-
-    public void setFilhoDir(No filhoDir) {
-        this.filhoDir = filhoDir;
-    }
-
     public int getChave() {
         return chave;
     }
@@ -57,19 +56,13 @@ public class No {
         this.chave = chave;
     }
 
-    public int getFatorBalanceamento() {
-        return fatorBalanceamento;
+    public int getBalanceamento() {
+        return balanceamento;
     }
 
-    public void setFatorBalanceamento(int fatorBalanceamento) {
-        this.fatorBalanceamento = fatorBalanceamento;
+    public void setBalanceamento(int balanceamento) {
+        this.balanceamento = balanceamento;
     }
-    
-    
-    
-    
-    
-    
     
     
 }
