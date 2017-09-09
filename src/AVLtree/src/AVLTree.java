@@ -27,19 +27,29 @@ public class AVLTree {
         this.root = root;
     }
 
+    
+    
+    
+    
+    
     public void inserirNo(int chave, No root) {
 
         No novo = new No(chave);
 
-        if (root == null) {
+        if (isEmpty()) {
+
+            novo.setBalanceamento(0);
             root = novo;
+            return;
+
         } else if (novo.getChave() < root.getChave()) {
 
             if (root.getFilhoEsquerdo() == null) {
 
                 novo.setPai(root);
                 root.setFilhoEsquerdo(novo);
-                balancearAVL(root);
+                novo.setBalanceamento(0);
+                conferirFB(root);
 
             } else {
                 inserirNo(novo.getChave(), root.getFilhoEsquerdo());
@@ -50,7 +60,8 @@ public class AVLTree {
 
                 novo.setPai(root);
                 root.setFilhoDireito(novo);
-                balancearAVL(root);
+                novo.setBalanceamento(0);
+                conferirFB(root);
 
             } else {
                 inserirNo(novo.getChave(), root.getFilhoDireito());
@@ -61,58 +72,88 @@ public class AVLTree {
     }
 
     public No buscarNo(int chave, No root) {
-        
-        if(root == null) return null;
-        else{
-            
-            if(root.getChave() < chave)
-                buscarNo(chave, root.getFilhoDireito());
-            
-            else if(root.getChave() > chave)
-                buscarNo(chave, root.getFilhoEsquerdo());
+
+        if (root == null) {
+            return null;
+        } else if (root.getChave() < chave) {
+            buscarNo(chave, root.getFilhoDireito());
+        } else if (root.getChave() > chave) {
+            buscarNo(chave, root.getFilhoEsquerdo());
         }
         return root;
     }
 
-    public boolean isEmpty(){ 
+    public boolean isEmpty() {
         return this.root == null;
     }
-    
+
     public No remover(int chave) {
-        
+
         No novo = buscarNo(chave, this.root);
-        
-        if(novo != null){
+
+        if (novo != null) {
         }
-        
+
         return null;
     }
 
     public void preOrdem(No root) {
 
-        if (root == null) return;
-        
+        if (isEmpty())
+            return;
+
         System.out.println(root.getChave());
-        
+
         preOrdem(root.getFilhoEsquerdo());
-        
+
         preOrdem(root.getFilhoDireito());
     }
-    
-    
-    public void rotEsquerdaSIMPLES() {
+
+    public No rotEsquerdaSIMPLES(No desbalanceado) {
+        
+        No aux = desbalanceado.getFilhoDireito();
+        
+        // tira a referência direita do nó desbalanceado
+        // sem perder referência do nós a esquerda do rotacionado(maiores que o desbalanceado)
+        desbalanceado.setFilhoDireito(aux.getFilhoEsquerdo());
+        
+        if(desbalanceado.getFilhoDireito() != null)
+            desbalanceado.getFilhoDireito().setPai(desbalanceado);
+        
+        aux.setFilhoEsquerdo(desbalanceado);
+        
+        // tira referência PAI do nó auxiliar
+        aux.setPai(desbalanceado.getPai());
+        
+        desbalanceado.setPai(aux);
+        
+        // resolver referência esquerda ou direita do pai do auxiliar(possível novo ROOT)
+        if(aux.getPai() != null){
+            
+            // se auxiliar não for o novo ROOT, precisa resolver referância:
+            
+            // direita do pai dele
+            if(aux.getPai().getFilhoDireito() == desbalanceado)
+                aux.getPai().setFilhoDireito(aux);
+            
+            else if(aux.getPai().getFilhoEsquerdo() == desbalanceado)
+                aux.getPai().setFilhoEsquerdo(aux);
+        }
+        
+        balancear(desbalanceado);
+        balancear(aux);
+        
+        // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
+        return aux;
+        
     }
 
-    
     public void rotDireitaSIMPLES() {
     }
 
-    
-    
     public void rotEsquerdaDUPLA() {
     }
 
-    
     public void rotDireitaDUPLA() {
     }
 
