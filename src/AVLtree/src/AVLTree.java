@@ -190,10 +190,20 @@ public class AVLTree {
         
     }
 
-    public void rotEsquerdaDUPLA() {
+    public void rotEsquerdaDUPLA(No desbalanceado) {
+        
+        // desbalanceado = nó raiz da sub-árvore direita do nó realmente desbalanceado
+        desbalanceado.setFilhoEsquerdo(rotEsquerdaSIMPLES(desbalanceado.getFilhoEsquerdo()));
+        
+        desbalanceado.getPai().setFilhoDireito(rotDireitaSIMPLES(desbalanceado));
     }
 
-    public void rotDireitaDUPLA() {
+    public void rotDireitaDUPLA(No desbalanceado) {
+        
+        desbalanceado.setFilhoDireito(rotDireitaSIMPLES(desbalanceado.getFilhoDireito()));
+        
+        desbalanceado.getPai().setFilhoEsquerdo(rotEsquerdaSIMPLES(desbalanceado));
+        
     }
 
 }
