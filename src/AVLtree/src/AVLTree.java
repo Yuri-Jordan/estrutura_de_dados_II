@@ -83,11 +83,8 @@ public class AVLTree {
         return root;
     }
 
-    public boolean isEmpty() {
-        return this.root == null;
-    }
 
-    public No remover(int chave) {
+    public No removerNo(int chave) {
 
         No novo = buscarNo(chave, this.root);
 
@@ -108,13 +105,17 @@ public class AVLTree {
 
         preOrdem(root.getFilhoDireito());
     }
+    
+    public boolean isEmpty() {
+        return this.root == null;
+    }
 
     public No rotEsquerdaSIMPLES(No desbalanceado) {
         
         No aux = desbalanceado.getFilhoDireito();
         
         // tira a referência direita do nó desbalanceado
-        // sem perder referência do nós a esquerda do rotacionado(maiores que o desbalanceado)
+        // sem perder referência dos nós a esquerda do rotacionado(maiores que o desbalanceado)
         desbalanceado.setFilhoDireito(aux.getFilhoEsquerdo());
         
         if(desbalanceado.getFilhoDireito() != null)
@@ -136,6 +137,7 @@ public class AVLTree {
             if(aux.getPai().getFilhoDireito() == desbalanceado)
                 aux.getPai().setFilhoDireito(aux);
             
+            // esquerda do pai dele
             else if(aux.getPai().getFilhoEsquerdo() == desbalanceado)
                 aux.getPai().setFilhoEsquerdo(aux);
         }
@@ -148,7 +150,44 @@ public class AVLTree {
         
     }
 
-    public void rotDireitaSIMPLES() {
+    public No rotDireitaSIMPLES(No desbalanceado) {
+        
+        No aux = desbalanceado.getFilhoEsquerdo();
+        
+        // tira a referência esquerda do nó desbalanceado
+        // sem perder a referência dos nós à direita do rotacionado(menores que o desbalanceado)
+        desbalanceado.setFilhoEsquerdo(aux.getFilhoDireito());
+        
+        if(desbalanceado.getFilhoEsquerdo()!= null)
+            desbalanceado.getFilhoEsquerdo().setPai(desbalanceado);
+        
+        aux.setFilhoDireito(desbalanceado);
+        
+        // tira referência PAI do nó auxiliar
+        aux.setPai(desbalanceado.getPai());
+        
+        desbalanceado.setPai(aux);
+        
+        // resolver referência esquerda ou direita do pai do auxiliar(possível novo ROOT)
+        if(aux.getPai() != null){
+            
+            // se auxiliar não for o novo ROOT, precisa resolver referância:
+            
+            // direita do pai dele
+            if(aux.getPai().getFilhoDireito() == desbalanceado)
+                aux.getPai().setFilhoDireito(aux);
+            
+            // esquerda do pai dele
+            else if(aux.getPai().getFilhoEsquerdo() == desbalanceado)
+                aux.getPai().setFilhoEsquerdo(aux);
+        }
+        
+        balancear(desbalanceado);
+        balancear(aux);
+        
+        // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
+        return aux;
+        
     }
 
     public void rotEsquerdaDUPLA() {
