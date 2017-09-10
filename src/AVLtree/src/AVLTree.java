@@ -41,7 +41,7 @@ public class AVLTree {
                 root.setFilhoEsquerdo(novo);
                 
                 // sai conferindo a partir do nó acima do folha
-                alterarFBinsercaoEsquerda(root);
+                //alterarFBinsercaoEsquerda(root);
 
             } else {
                 inserirNo(novo.getChave(), root.getFilhoEsquerdo());
@@ -54,7 +54,7 @@ public class AVLTree {
                 root.setFilhoDireito(novo);
                 
                 // sai conferindo a partir do nó acima do folha
-                alterarFBinsercaoDireita(root);
+                //alterarFBinsercaoDireita(root);
 
             } else {
                 inserirNo(novo.getChave(), root.getFilhoDireito());
@@ -136,19 +136,21 @@ public class AVLTree {
 
         return null;
     }
-
-    public void preOrdem(No root) {
-
-        if (isEmpty()) {
-            return;
+    
+    public void preOrdem(No root){
+        
+        if(isEmpty()) return;
+        
+        else if(root != null){
+            
+            System.out.print(root.getChave() + "\t");
+            
+            preOrdem(root.getFilhoEsquerdo());
+            preOrdem(root.getFilhoDireito());
         }
-
-        System.out.println(root.getChave());
-
-        preOrdem(root.getFilhoEsquerdo());
-
-        preOrdem(root.getFilhoDireito());
     }
+
+
 
     public boolean isEmpty() {
         return this.root == null;
@@ -186,8 +188,8 @@ public class AVLTree {
             }
         }
 
-        balancear(desbalanceado);
-        balancear(aux);
+        //balancear(desbalanceado);
+        //balancear(aux);
 
         // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
         return aux;
@@ -226,8 +228,8 @@ public class AVLTree {
             }
         }
 
-        balancear(desbalanceado);
-        balancear(aux);
+        //balancear(desbalanceado);
+        //balancear(aux);
 
         // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
         return aux;
