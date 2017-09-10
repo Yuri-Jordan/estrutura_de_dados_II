@@ -137,16 +137,14 @@ public class AVLTree {
         return null;
     }
     
-    public void preOrdem(No root){
+    public void emOrdem(No root){
         
-        if(isEmpty()) return;
+        if(root == null) return;
         
-        else if(root != null){
-            
+        else{
+            emOrdem(root.getFilhoEsquerdo());
             System.out.print(root.getChave() + "\t");
-            
-            preOrdem(root.getFilhoEsquerdo());
-            preOrdem(root.getFilhoDireito());
+            emOrdem(root.getFilhoDireito());
         }
     }
 

@@ -48,8 +48,8 @@ public class Main {
                     break;
             }
            
-            System.out.print("\nPré ordem : ");
-            avlt.preOrdem(avlt.getRoot());
+            System.out.print("\nEm Ordem : ");
+            avlt.emOrdem(avlt.getRoot());
             
         } while (true);
          
