@@ -110,40 +110,37 @@ public class AVLTree {
             else
                 rotDireitaDUPLA(root);
         }
-            
-             
-        
     }
 
     public No buscarNo(int chave, No root) {
 
-        if (root == null) {
-            return null;
-        } else if (root.getChave() < chave) {
-            buscarNo(chave, root.getFilhoDireito());
-        } else if (root.getChave() > chave) {
-            buscarNo(chave, root.getFilhoEsquerdo());
+        No iterador = root;
+
+        while (iterador != null) {
+
+            if (iterador.getChave() == chave) {
+                break;
+            }
+
+            if (iterador.getChave() < chave) {
+                iterador = iterador.getFilhoDireito();
+            } else {
+                iterador = iterador.getFilhoEsquerdo();
+            }
+
         }
-        return root;
-    }
+        return iterador;
 
-    public No removerNo(int chave) {
-
-        No novo = buscarNo(chave, this.root);
-
-        if (novo != null) {
-        }
-
-        return null;
     }
     
+
     public void emOrdem(No root){
         
         if(root == null) return;
         
         else{
             emOrdem(root.getFilhoEsquerdo());
-            System.out.print(root.getChave() + "\t");
+            System.out.print(root.getChave() + " | ");
             emOrdem(root.getFilhoDireito());
         }
     }
@@ -254,7 +251,16 @@ public class AVLTree {
     }
 
     
-
+    public int altura(No noot){
+        
+        if(root == null) return -1;
+        
+        int alturaEsquerda = altura(root.getFilhoEsquerdo());
+        int alturaDireita = altura(root.getFilhoDireito());
+        
+        return Math.max(alturaEsquerda, alturaDireita) +1;
+        
+    }
    
 
 }

@@ -19,7 +19,7 @@ public class No {
 
     public No(int chave) {
         this.chave = chave;
-        this.setBalanceamento(0);
+        //this.setBalanceamento(0);
     }
 
     public No() {

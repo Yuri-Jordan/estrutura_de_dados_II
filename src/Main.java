@@ -27,6 +27,7 @@ public class Main {
             System.out.println("\n============== AVL Operações ==========\n");
             System.out.println("1. Inserir nó");
             System.out.println("2. Buscar nó");
+            System.out.println("3. Altura");
             
             System.out.println("\n0. Sair");
 
@@ -34,16 +35,28 @@ public class Main {
             int entrada = scan.nextInt();
             switch (entrada) {
                 case 1:
+                    
                     System.out.println("Digite um inteiro para inserir");
                     avlt.inserirNo(scan.nextInt(), avlt.getRoot());
                     break;
+                    
                 case 2:
+                    
                     System.out.println("Digite um inteiro para buscar");
-                    System.out.println("Resultado : " + avlt.buscarNo(scan.nextInt(), avlt.getRoot()).getChave());
+                    int chave = scan.nextInt();
+                    System.out.println("Resultado : " + avlt.buscarNo(chave, avlt.getRoot()).getChave());
                     break;
-                case 0: System.exit(0);
+                    
+                case 3:
+                System.out.println("Resultado : " + avlt.altura(avlt.getRoot()));
+                break;
+                    
+                case 0:
+                    
+                    System.exit(0);
                     
                 default:
+                    
                     System.out.println("Entrada inválida\n");
                     break;
             }
