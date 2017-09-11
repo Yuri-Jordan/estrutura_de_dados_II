@@ -5,7 +5,7 @@ public class AVLTree {
     No root;
 
     public AVLTree() {
-        this.root = new No();
+        
     }
 
     public No getRoot() {
@@ -32,6 +32,7 @@ public class AVLTree {
         // se AVL vazia novo nó = ROOT
         if (isEmpty()) {
             this.root = novo;
+            return;
             
         } else if (novo.getChave() < root.getChave()) {
 
@@ -72,7 +73,7 @@ public class AVLTree {
         
         if(root.getBalanceamento() == 0)return;
         
-        // nó estiver desbalanceado, confere que tipo de rotação se deve fazer
+        // se nó estiver desbalanceado, confere que tipo de rotação se deve fazer
         else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
             conferirFBController(root);
         else
@@ -91,7 +92,7 @@ public class AVLTree {
         else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
             conferirFBController(root);
         else
-            alterarFBinsercaoDireita(root.getPai());
+            alterarFBinsercaoEsquerda(root.getPai());
     }
     
     private void conferirFBController(No root) {
@@ -186,7 +187,8 @@ public class AVLTree {
         //balancear(desbalanceado);
         //balancear(aux);
 
-        // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
+        // retorno do nó rotacionado para, se desejado, 
+        // aproveitar esse método de rotSIMPLES para a rotDUPLA
         return aux;
 
     }
@@ -253,12 +255,25 @@ public class AVLTree {
     
     public int altura(No noot){
         
-        if(root == null) return -1;
         
-        int alturaEsquerda = altura(root.getFilhoEsquerdo());
-        int alturaDireita = altura(root.getFilhoDireito());
+        if (root == null || (root.getFilhoEsquerdo() == null && root.getFilhoDireito()== null)) {
+            return 0;
+        }
+        return Math.max(altura(root.getFilhoEsquerdo()), altura(root.getFilhoDireito())) + 1;
         
-        return Math.max(alturaEsquerda, alturaDireita) +1;
+        
+        
+        
+//        if(root == null) return 0;
+//
+//        int alturaEsquerda = altura(root.getFilhoEsquerdo());
+//        int alturaDireita = altura(root.getFilhoDireito());
+//        
+//        if (alturaEsquerda > alturaDireita) {
+//            return alturaEsquerda + 1;
+//        } else {
+//            return alturaDireita + 1;
+//        }
         
     }
    

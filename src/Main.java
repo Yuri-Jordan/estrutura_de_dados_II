@@ -1,5 +1,6 @@
 
 import AVLtree.src.AVLTree;
+import AVLtree.src.No;
 import java.util.Scanner;
 
 /*
@@ -44,8 +45,14 @@ public class Main {
                     
                     System.out.println("Digite um inteiro para buscar");
                     int chave = scan.nextInt();
-                    System.out.println("Resultado : " + avlt.buscarNo(chave, avlt.getRoot()).getChave());
-                    break;
+                    
+                    No resultado = avlt.buscarNo(chave, avlt.getRoot());
+                    
+                    if(resultado != null){
+                        System.out.println("Resultado : " + resultado.getChave());
+                        break;
+                    }
+                    System.out.println("Nó não existe");
                     
                 case 3:
                 System.out.println("Resultado : " + avlt.altura(avlt.getRoot()));
