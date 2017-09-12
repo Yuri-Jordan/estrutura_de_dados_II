@@ -38,7 +38,7 @@ public class Main {
                 case 1:
                     
                     System.out.println("Digite um inteiro para inserir");
-                    avlt.inserirNo(scan.nextInt(), avlt.getRoot());
+                    avlt.inserir(scan.nextInt());
                     break;
                     
                 case 2:
@@ -55,8 +55,8 @@ public class Main {
                     System.out.println("Nó não existe");
                     
                 case 3:
-                System.out.println("Resultado : " + avlt.altura(avlt.getRoot()));
-                break;
+                    System.out.println("Resultado : " + avlt.altura(avlt.getRoot()));
+                    break;
                     
                 case 0:
                     
@@ -69,7 +69,7 @@ public class Main {
             }
            
             System.out.print("\nEm Ordem : ");
-            avlt.emOrdem(avlt.getRoot());
+            avlt.emOrdem();
             
         } while (true);
          

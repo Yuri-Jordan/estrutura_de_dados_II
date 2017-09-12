@@ -14,8 +14,18 @@ public class No {
     private No filhoEsquerdo;
     private No filhoDireito;
     private No pai;
+    
     private int chave;
     private int balanceamento;
+
+    public int getAltura() {
+        return altura;
+    }
+
+    public void setAltura(int altura) {
+        this.altura = altura;
+    }
+    private int altura;
 
     public No(int chave) {
         this.chave = chave;

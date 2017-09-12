@@ -20,97 +20,106 @@ public class AVLTree {
     
     
     
-    
-    
-    
-    
-    
-    public void inserirNo(int chave, No root) {
-
-        No novo = new No(chave);
+     public void inserir(int chave) {
+        this.root = inserirNo(chave, this.root);
         
-        // se AVL vazia novo nó = ROOT
-        if (isEmpty()) {
-            this.root = novo;
-            return;
+    }
+    
+    private No inserirNo(int chave, No root) {
+        
+        
+        if(root == null){
+            root = new No(chave);
+            return root;
             
-        } else if (novo.getChave() < root.getChave()) {
+        } else if (chave < root.getChave()) {
 
             if (root.getFilhoEsquerdo() == null) {
-
-                novo.setPai(root);
-                root.setFilhoEsquerdo(novo);
+                
+                root.setFilhoEsquerdo(new No(chave));
+                
+                root.getFilhoEsquerdo().setPai(root);
                 
                 // sai conferindo a partir do nó acima do folha
-                //alterarFBinsercaoEsquerda(root);
+                root = alterarFBinsercaoEsquerda(root);
 
             } else {
-                inserirNo(novo.getChave(), root.getFilhoEsquerdo());
+                inserirNo(chave, root.getFilhoEsquerdo());
             }
-        } else if (novo.getChave() > root.getChave()) {
+        } else if (chave > root.getChave()) {
 
             if (root.getFilhoDireito() == null) {
 
-                novo.setPai(root);
-                root.setFilhoDireito(novo);
+                root.setFilhoDireito(new No(chave));
+                
+                root.getFilhoDireito().setPai(root);
                 
                 // sai conferindo a partir do nó acima do folha
-                //alterarFBinsercaoDireita(root);
+                root = alterarFBinsercaoDireita(root);
 
             } else {
-                inserirNo(novo.getChave(), root.getFilhoDireito());
+                inserirNo(chave, root.getFilhoDireito());
             }
         } else {
             System.out.println("Nó existente!");
+            return root = this.root;
         }
+        
+        return root;
     }
     
-    private void alterarFBinsercaoDireita(No root){
+    private No alterarFBinsercaoDireita(No root){
         
-        if(root == null) return;
+        if(root != null){
         
-        root.setBalanceamento(root.getBalanceamento() - 1);
-        
-        if(root.getBalanceamento() == 0)return;
-        
-        // se nó estiver desbalanceado, confere que tipo de rotação se deve fazer
-        else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
-            conferirFBController(root);
-        else
-            alterarFBinsercaoDireita(root.getPai());
-    }
-    
-    private void alterarFBinsercaoEsquerda(No root){
-        
-        if(root == null) return;
-        
-        root.setBalanceamento(root.getBalanceamento() + 1);
-        
-        if(root.getBalanceamento() == 0)return;
-        
-        // nó estiver desbalanceado, confere que tipo de rotação se deve fazer
-        else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
-            conferirFBController(root);
-        else
-            alterarFBinsercaoEsquerda(root.getPai());
-    }
-    
-    private void conferirFBController(No root) {
-        
-        
-        if(root.getBalanceamento() == -2){
-            
-            if(root.getFilhoDireito().getBalanceamento() <= 0)
-                rotEsquerdaSIMPLES(root);
+            root.setBalanceamento(root.getBalanceamento() - 1);
+
+            if(root.getBalanceamento() == 0)return root;
+
+            // se nó estiver desbalanceado, confere que tipo de rotação se deve fazer
+            else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
+                root = conferirFBController(root);
             else
-                rotEsquerdaDUPLA(root);
-        }else if(root.getBalanceamento() == 2){
-            
-            if(root.getFilhoEsquerdo().getBalanceamento() >= 0)
-                rotDireitaSIMPLES(root);
-            else
-                rotDireitaDUPLA(root);
+                if(root.getPai() != null)
+                    alterarFBinsercaoDireita(root.getPai());
         }
+        return root;
+    }
+    
+    private No alterarFBinsercaoEsquerda(No root){
+        
+        if(root != null){
+        
+            root.setBalanceamento(root.getBalanceamento() + 1);
+
+            if(root.getBalanceamento() == 0)return root;
+
+            // nó estiver desbalanceado, confere que tipo de rotação se deve fazer
+            else if(root.getBalanceamento() < -1 || root.getBalanceamento() > 1)
+                root = conferirFBController(root);
+            else
+                alterarFBinsercaoEsquerda(root.getPai());
+        }
+        return root;
+    }
+    
+    private No conferirFBController(No desbalanceado) {
+        
+        
+        if(desbalanceado.getBalanceamento() == -2){
+            
+            if(desbalanceado.getFilhoDireito().getBalanceamento() <= 0)
+                desbalanceado = rotEsquerdaSIMPLES(desbalanceado);
+            else
+                rotEsquerdaDUPLA(desbalanceado);
+        }else if(desbalanceado.getBalanceamento() == 2){
+            
+            if(desbalanceado.getFilhoEsquerdo().getBalanceamento() >= 0)
+                desbalanceado = rotDireitaSIMPLES(desbalanceado);
+            else
+                rotDireitaDUPLA(desbalanceado);
+        }
+        return desbalanceado;
     }
 
     public No buscarNo(int chave, No root) {
@@ -134,59 +143,31 @@ public class AVLTree {
 
     }
     
+    public void emOrdem(){
+        emOrdem(this.root);
+    }
+    
+    private void emOrdem(No root) {
 
-    public void emOrdem(No root){
-        
-        if(root == null) return;
-        
-        else{
+        if (root == null) {
+            return;
+        } else {
             emOrdem(root.getFilhoEsquerdo());
             System.out.print(root.getChave() + " | ");
             emOrdem(root.getFilhoDireito());
         }
     }
 
-
-
-    public boolean isEmpty() {
-        return this.root == null;
-    }
-
     public No rotEsquerdaSIMPLES(No desbalanceado) {
 
         No aux = desbalanceado.getFilhoDireito();
-
-        // tira a referência direita do nó desbalanceado
-        // sem perder referência dos nós a esquerda do rotacionado(maiores que o desbalanceado)
+        
         desbalanceado.setFilhoDireito(aux.getFilhoEsquerdo());
-
-        if (desbalanceado.getFilhoDireito() != null) {
-            desbalanceado.getFilhoDireito().setPai(desbalanceado);
-        }
-
+        
         aux.setFilhoEsquerdo(desbalanceado);
-
-        // tira referência PAI do nó auxiliar
-        aux.setPai(desbalanceado.getPai());
-
+        
         desbalanceado.setPai(aux);
-
-        // resolver referência esquerda ou direita do pai do auxiliar(possível novo ROOT)
-        if (aux.getPai() != null) {
-
-            // se auxiliar não for o novo ROOT, precisa resolver referância:
-            // direita do pai dele
-            if (aux.getPai().getFilhoDireito() == desbalanceado) {
-                aux.getPai().setFilhoDireito(aux);
-            } // esquerda do pai dele
-            else if (aux.getPai().getFilhoEsquerdo() == desbalanceado) {
-                aux.getPai().setFilhoEsquerdo(aux);
-            }
-        }
-
-        //balancear(desbalanceado);
-        //balancear(aux);
-
+        
         // retorno do nó rotacionado para, se desejado, 
         // aproveitar esse método de rotSIMPLES para a rotDUPLA
         return aux;
@@ -196,39 +177,15 @@ public class AVLTree {
     public No rotDireitaSIMPLES(No desbalanceado) {
 
         No aux = desbalanceado.getFilhoEsquerdo();
-
-        // tira a referência esquerda do nó desbalanceado
-        // sem perder a referência dos nós à direita do rotacionado(menores que o desbalanceado)
+        
         desbalanceado.setFilhoEsquerdo(aux.getFilhoDireito());
-
-        if (desbalanceado.getFilhoEsquerdo() != null) {
-            desbalanceado.getFilhoEsquerdo().setPai(desbalanceado);
-        }
-
+        
         aux.setFilhoDireito(desbalanceado);
-
-        // tira referência PAI do nó auxiliar
-        aux.setPai(desbalanceado.getPai());
-
+        
         desbalanceado.setPai(aux);
-
-        // resolver referência esquerda ou direita do pai do auxiliar(possível novo ROOT)
-        if (aux.getPai() != null) {
-
-            // se auxiliar não for o novo ROOT, precisa resolver referância:
-            // direita do pai dele
-            if (aux.getPai().getFilhoDireito() == desbalanceado) {
-                aux.getPai().setFilhoDireito(aux);
-            } // esquerda do pai dele
-            else if (aux.getPai().getFilhoEsquerdo() == desbalanceado) {
-                aux.getPai().setFilhoEsquerdo(aux);
-            }
-        }
-
-        //balancear(desbalanceado);
-        //balancear(aux);
-
-        // retorno do nó rotacionado para, se desejado, aproveitar esse método de rotSIMPLES para a rotDUPLA
+        
+        // retorno do nó rotacionado para, se desejado, 
+        // aproveitar esse método de rotSIMPLES para a rotDUPLA
         return aux;
 
     }
@@ -261,19 +218,6 @@ public class AVLTree {
         }
         return Math.max(altura(root.getFilhoEsquerdo()), altura(root.getFilhoDireito())) + 1;
         
-        
-        
-        
-//        if(root == null) return 0;
-//
-//        int alturaEsquerda = altura(root.getFilhoEsquerdo());
-//        int alturaDireita = altura(root.getFilhoDireito());
-//        
-//        if (alturaEsquerda > alturaDireita) {
-//            return alturaEsquerda + 1;
-//        } else {
-//            return alturaDireita + 1;
-//        }
         
     }
    
